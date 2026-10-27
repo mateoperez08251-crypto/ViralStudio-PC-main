@@ -1,4 +1,4 @@
-# ViralStudio PC + Colab · 1.2.1
+# ViralStudio PC + Colab · 1.2.2
 
 La interfaz original se abre en tu PC. Colab ejecuta Qwen, la voz, la transcripción, la música, el render y la revisión visual. Cloudflare conecta ambos mediante HTTPS y una llave. No necesitas instalar los modelos ni ComfyUI en la PC.
 
@@ -69,3 +69,26 @@ Fuentes oficiales de la integración:
 - [Modelos Qwen3.5 de Comfy-Org](https://huggingface.co/Comfy-Org/Qwen3.5)
 
 Validación y límites de esta entrega: `VALIDACION_PC_COLAB.md`. Las auditorías anteriores del ZIP se conservan como documentación histórica.
+
+
+## Guías directamente en Colab
+
+La libreta actualizada incluye un panel **Guías .md** en la interfaz original. Está activado por defecto y funciona para tema, guion y audio. Importa uno o varios archivos (24 KiB en total por perfil), escribe el nombre y pulsa **Guardar y seleccionar guía**. Puedes editarla o descargarla desde ese panel. La selección es manual; la clasificación automática de estilos y el clip de prueba generado con la guía siguen pendientes.
+
+Las guías se guardan en `animation_guides` dentro de la carpeta de proyectos del motor. Mantén `GUARDAR_EN_DRIVE` activado para conservarlas entre sesiones. Cada proyecto recibe una copia de la guía seleccionada. Con la función activada, debes seleccionar una guía antes de crear el video; puedes desactivarla explícitamente si quieres crear sin guía. La biblioteca local de la PC y la de Colab son independientes: puedes descargar e importar un mismo `.md` en ambas.
+
+Para actualizar Colab, abre la libreta nueva y ejecuta la celda de instalación cuando no haya trabajos en marcha; recarga el Studio después. Esto no mantiene encendido Colab automáticamente.
+
+
+## Error Cloudflare HTTP 530
+
+Cloudflare no puede resolver el destino del túnel. Este estado no confirma que la llave sea incorrecta. Mantén Colab conectado y ejecuta la celda **Enlace y diagnóstico** con **Rehacer túnel (enlace nuevo)**. Copia la nueva URL base y llave a la PC, guarda y comprueba el motor. Si el runtime terminó, primero vuelve a ejecutar la instalación. La cola local permanece guardada; la existencia de los proyectos remotos depende de que se conserve su almacenamiento.
+
+La celda de diagnóstico imprime ahora URL y llave por separado. El cliente distingue el error 530 de las respuestas de autenticación y conserva los trabajos pendientes al recibirlo.
+
+
+## Audio: botón y estado del envío
+
+Al pulsar Subir y analizar se muestra el paso actual: crear proyecto, enviar audio e iniciar análisis. Los fallos quedan visibles debajo del botón y se puede reintentar. Las consultas de creación y arranque esperan hasta dos minutos; la subida admite hasta quince minutos. Se conserva el identificador del intento para reutilizar el proyecto cuando se pierde una respuesta. Una transferencia guardada en la cola local se identifica como pendiente y no como audio ya verificado.
+
+En Colab, si Aplicar guía está activado, primero importa y selecciona una guía o desactiva esa opción. El modo original analiza el audio y prepara el storyboard; después permite Renderizar video. En la PC, la opción Procesar hasta el video final automáticamente continúa las etapas. En ambos casos Colab y el túnel deben estar disponibles.
